@@ -29,7 +29,7 @@ def get_tasks():
     results = []
     for task in tasks:
         results.append(task.wrap())
-    return jsonify({'tasks': results})
+    return jsonify(results)
 
 @app.route('/api/tasks/<string:task_id>', methods=['GET'])
 def get_task(task_id):
@@ -38,7 +38,7 @@ def get_task(task_id):
         abort(404)
     result = task.wrap()
     
-    return jsonify({'task': result})
+    return jsonify(result)
 
 @app.route('/api/tasks', methods=['POST'])
 def create_task():
@@ -48,7 +48,7 @@ def create_task():
     task.save()
     result = task.wrap()
     
-    return jsonify({'task': result}), 201
+    return jsonify(result), 201
     
 @app.route('/api/tasks/<string:task_id>', methods=['PUT'])
 def update_task(task_id):
@@ -58,11 +58,13 @@ def update_task(task_id):
     if not valid_request(request):
         abort(400)
     
-    task['description'] = request.json['description']
-    task['order'] = request.json['order']
-    task['done'] = request.json['done']
+    task.description = request.json['description']
+    task.order = request.json['order']
+    task.done = request.json['done']
+    task.save()
+    result = task.wrap()
     
-    return jsonify({'task': task})
+    return jsonify(result)
 
 @app.route('/api/tasks/<string:task_id>', methods=['DELETE'])
 def delete_task(task_id):

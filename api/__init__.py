@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, make_response
 from flask.ext.mongoalchemy import MongoAlchemy
+from flask.ext.cors import CORS
 import datetime
 import json
 from bson.objectid import ObjectId
@@ -8,6 +9,7 @@ from werkzeug import Response
 app = Flask(__name__)
 app.config['MONGOALCHEMY_DATABASE'] = 'flask-react-todo'
 db = MongoAlchemy(app)
+cors = CORS(app)
 
 class MongoJsonEncoder(json.JSONEncoder):
     def default(self, obj):
