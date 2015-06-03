@@ -1,0 +1,24 @@
+{
+  "name": "flask-react-todo-app",
+  "version": "0.0.0",
+  "description": "",
+  "main": "js/app.js",
+  "scripts": {
+    "start": "watchify -o js/bundle.js -v -d js/app.js",
+    "build": "browserify . | uglifyjs -cm > js/bundle.min.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "keymirror": "^0.1.1",
+    "flux": "^2.0.3",
+    "react": "^0.13.3"
+  },
+  "devDependencies": {
+    "uglify-js": "^2.4.23",
+    "watchify": "^3.2.1",
+    "browserify": "^10.2.3",
+    "reactify": "^1.1.1"
+  }
+}
