@@ -20,5 +20,10 @@
     "watchify": "^3.2.1",
     "browserify": "^10.2.3",
     "reactify": "^1.1.1"
+  },
+  "browserify": {
+    "transform": [
+      "reactify"
+    ]
   }
 }
