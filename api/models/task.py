@@ -1,4 +1,4 @@
-from app import db 
+from api import db 
 
 class Task(db.Document):
     

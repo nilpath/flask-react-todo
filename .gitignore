@@ -1,1 +1,6 @@
-__pycache__/
+.DS_Store
+__pycache__
+node_modules
+
+bundle.js
+bundle.min.js

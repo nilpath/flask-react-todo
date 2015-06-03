@@ -1,8 +1,8 @@
 from flask import abort, request
 
-from app import app
-from app import jsonify
-from models.task import Task
+from api import app
+from api import jsonify
+from api.models.task import Task
 
 def find_task(task_id):
     return Task.query.get(task_id)
