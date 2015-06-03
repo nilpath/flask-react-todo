@@ -13,7 +13,9 @@
   "dependencies": {
     "keymirror": "^0.1.1",
     "flux": "^2.0.3",
-    "react": "^0.13.3"
+    "react": "^0.13.3",
+    "object-assign": "^2.0.0",
+    "superagent": "^1.2.0"
   },
   "devDependencies": {
     "uglify-js": "^2.4.23",
