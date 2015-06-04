@@ -15,9 +15,9 @@ var Footer = React.createClass({
     var remainingText = [count, ' item', plural, ' left'].join('');
     
     return (
-      <footer>
+      <footer className="todo-footer">
         <span>{remainingText}</span>
-        <button onClick={this.completeAll}>Mark all as complete</button>
+        <button className="todo-footer__link todo--right" onClick={this.completeAll}>Mark all as complete</button>
       </footer>
     );
     

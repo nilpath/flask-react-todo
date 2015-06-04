@@ -6,5 +6,5 @@ TodoAPI.fetchTodos();
 
 React.render(
   <TodoApp />,
-  document.getElementById('todo')
+  document.getElementById('app')
 );

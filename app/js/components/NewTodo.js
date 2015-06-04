@@ -14,9 +14,15 @@ var NewTodo = React.createClass({
     var description = this.state.description;
     
     return (
-      <div>
-        <input type="text" value={description} onChange={this.handleChange} />
-        <button onClick={this.addTodo} >Add Todo</button>
+      <div className="todo-add">
+        <input 
+          className="todo-add__input" 
+          type="text"
+          placeholder="What needs to be done?" 
+          value={description} 
+          onChange={this.handleChange} 
+        />
+        <button className="todo-add__button" onClick={this.addTodo} >Add Todo</button>
       </div>
     );
   },
@@ -28,6 +34,7 @@ var NewTodo = React.createClass({
   addTodo: function() {
     if(!!this.state.description) {
       TodoActions.saveTodo({description: this.state.description});
+      this.setState(this.getInitialState());
     }
   }
   
