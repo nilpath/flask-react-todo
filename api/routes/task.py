@@ -9,6 +9,9 @@ def find_task(task_id):
     
 def next_order():
     task = Task.query.descending(Task.order).first()
+    if task is None:
+        return 0
+        
     return task.order + 1
 
 def valid_request(request):
