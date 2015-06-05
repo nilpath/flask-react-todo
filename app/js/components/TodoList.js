@@ -9,6 +9,7 @@ var TodoList = React.createClass({
   },
   
   render: function () {
+    
     var todos = this.props.todos;
     
     function renderTodoListItems(todos) {
@@ -19,8 +20,12 @@ var TodoList = React.createClass({
       return items;
     }
     
+    var todoList = (<ul className="todo-list">{renderTodoListItems(todos)}</ul>);
+    var emptyList = (<div className="todo-list todo-list--empty">Empty</div>);
+    var list = todos.length > 0 ? todoList : emptyList;
+    
     return (
-      <ul className="todo-list">{renderTodoListItems(todos)}</ul>
+      list
     );
   }
   

@@ -76,6 +76,7 @@ body {
   border: none;
   background: transparent;
   color: #448ccb;
+  font-size: 13px;
 }
 
 .todo-add {
@@ -114,6 +115,12 @@ body {
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+.todo-list--empty {
+  text-align: center;
+  color: #999;
+  padding: 80px 20px;
 }
 
 .todo-list__item {
