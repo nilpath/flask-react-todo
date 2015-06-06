@@ -136,3 +136,8 @@ body {
   background: #f4f7fa;
 }
 
+.todo-list__item--dragging,
+.todo-list__item--dragging:nth-child(odd) {
+  background: #eee;
+}
+

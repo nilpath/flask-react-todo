@@ -30,7 +30,7 @@ module.exports = {
       });  
   },
   
-  saveTodo: function (newTodo) {
+  createTodo: function (newTodo) {
     request
       .post(ENDPOINTS.LIST_AND_SAVE)
       .send(newTodo)

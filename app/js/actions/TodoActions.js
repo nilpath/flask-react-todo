@@ -24,11 +24,29 @@ var TodoActions = {
     });
   },
   
+  reorder: function (todo, from, to) {
+    AppDispatcher.dispatch({
+      actionType: TodoConstants.REORDER,
+      data: {
+        todo: todo,
+        from: from,
+        to: to
+      }
+    });
+  },
+  
+  saveTodos: function (todos) {
+    AppDispatcher.dispatch({
+      actionType: TodoConstants.SAVE_TODOS,
+      data: todos
+    });
+  },
+  
   toggleDone: function (todo) {
     todo.done = !todo.done;
     
     AppDispatcher.dispatch({
-      actionType: TodoConstants.UPDATE_TODO,
+      actionType: TodoConstants.SAVE_TODO,
       data: todo
     });
   },
@@ -43,7 +61,7 @@ var TodoActions = {
     }
     
     AppDispatcher.dispatch({
-      actionType: TodoConstants.COMPLETE_ALL,
+      actionType: TodoConstants.SAVE_TODOS,
       data: toUpdate
     });
   }

@@ -10,8 +10,8 @@ function setTodos(data) {
   todos = data;
 }
 
-function saveTodo(newTodo) {
-  TodoAPI.saveTodo(newTodo);
+function createTodo(newTodo) {
+  TodoAPI.createTodo(newTodo);
 }
 
 function addTodo(todo) {
@@ -22,10 +22,14 @@ function updateTodo(todo) {
   TodoAPI.updateTodo(todo);
 }
 
-function completeAll(updates) {
+function updateAll(updates) {
   for (var i = 0; i < updates.length; i++) {
     updateTodo(updates[i]);
   }
+}
+
+function reorder(todo, from, to) {
+  todos.splice(to, 0, todos.splice(from,1)[0]);
 }
 
 var TodoStore = assign({}, EventEmitter.prototype, {
@@ -64,20 +68,28 @@ AppDispatcher.register(function(payload) {
       setTodos(payload.data);
       break;
       
-    case TodoConstants.SAVE_TODO:
-      saveTodo(payload.data);
+    case TodoConstants.CREATE_TODO:
+      createTodo(payload.data);
       break;
       
     case TodoConstants.ADD_TODO:
       addTodo(payload.data);
       break;
     
-    case TodoConstants.UPDATE_TODO:
+    case TodoConstants.SAVE_TODO:
       updateTodo(payload.data);
       break;
     
     case TodoConstants.COMPLETE_ALL:
-      completeAll(payload.data);
+      updateAll(payload.data);
+      break;
+    
+    case TodoConstants.REORDER:
+      reorder(payload.data.todo, payload.data.from, payload.data.to);
+      break;
+      
+    case TodoConstants.SAVE_TODOS:
+      updateAll(payload.data);
       break;
     
     default:
