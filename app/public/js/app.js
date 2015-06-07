@@ -1,13 +1,13 @@
 var react = require('react');
-var TodoAPI = require('./utils/TodoAPI.js');
-var TodoStore = require('./stores/TodoStore.js');
-var TodoApp = react.createFactory(require('./components/TodoApp.js'));
-var todos = document.getElementById('state').innerHTML;
+var TaskAPI = require('./utils/TaskAPI.js');
+var TaskStore = require('./stores/TaskStore.js');
+var TaskApp = react.createFactory(require('./components/TaskApp.js'));
+var tasks = document.getElementById('state').innerHTML;
 
 if (typeof window !== "undefined") {
   window.onload = function() {
-    react.render(TodoApp({
-      todos: JSON.parse(todos)
+    react.render(TaskApp({
+      tasks: JSON.parse(tasks)
     }), document.getElementById('app'));
   };
 }

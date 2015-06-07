@@ -1,28 +1,28 @@
 var React = require('react');
 var cx = require('react/lib/cx');
 var ReactPropTypes = React.PropTypes; 
-var TodoActions = require('../actions/TodoActions.js');
+var TaskActions = require('../actions/TaskActions.js');
 
-var TodoListItem = React.createClass({
+var TaskListItem = React.createClass({
   
   propTypes: {
-    todo: ReactPropTypes.object.isRequired,
+    task: ReactPropTypes.object.isRequired,
     order: ReactPropTypes.number.isRequired
   },
   
   getInitialState: function () {
     return {
-      todo: this.props.todo
+      task: this.props.task
     };
   },
   
   render: function () {
-    var todo = this.props.todo;
+    var task = this.props.task;
     var isDragging = this.props.isDragging;
     var classes = cx({
       'todo-list__item': true,
       'todo-list__item--dragging': isDragging,
-      'todo-list__item--done': todo.done
+      'todo-list__item--done': task.done
     });
     
     return (
@@ -36,21 +36,21 @@ var TodoListItem = React.createClass({
       >
         <input 
           type="checkbox" 
-          id={todo._id}
+          id={task._id}
           className="todo__checkbox"
-          checked={todo.done} 
+          checked={task.done} 
           onChange={this.toggleDone}
         />
-        <label htmlFor={todo._id}>{todo.description}</label>
+        <label htmlFor={task._id}>{task.description}</label>
       </li>
     );
     
   },
   
   toggleDone: function () {
-    TodoActions.toggleDone(this.props.todo);
+    TaskActions.toggleDone(this.props.task);
   }
   
 });
 
-module.exports = TodoListItem;
+module.exports = TaskListItem;

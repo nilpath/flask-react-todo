@@ -1,11 +1,11 @@
 var React = require('react');
 var ReactPropTypes = React.PropTypes;
-var TodoActions = require('../actions/TodoActions.js');
+var TaskActions = require('../actions/TaskActions.js');
 
 var Footer = React.createClass({
   
   propTypes: {
-    todos: ReactPropTypes.array.isRequired,
+    tasks: ReactPropTypes.array.isRequired,
     remainingItems: ReactPropTypes.array.isRequired
   },
   
@@ -24,7 +24,7 @@ var Footer = React.createClass({
   },
   
   completeAll: function () {
-    TodoActions.completeAll(this.props.todos);
+    TaskActions.completeAll(this.props.tasks);
   }
   
 });

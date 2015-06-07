@@ -1,12 +1,12 @@
 var React = require('react');
 var ReactPropTypes = React.PropTypes;
-var TodoListItem = require('./TodoListItem.js');
-var TodoActions = require('../actions/TodoActions.js');
+var TaskListItem = require('./TaskListItem.js');
+var TaskActions = require('../actions/TaskActions.js');
 
-var TodoList = React.createClass({
+var TaskList = React.createClass({
   
   propTypes: {
-    todos: ReactPropTypes.array.isRequired
+    tasks: ReactPropTypes.array.isRequired
   },
   
   getInitialState: function () {
@@ -17,10 +17,10 @@ var TodoList = React.createClass({
     this.setState({draggingIndex: index});
   },
   
-  updateTodoOrders: function () {
-    var todos = this.props.todos;
-    todos.forEach(function(todo, key) {
-      todo.order = key;
+  updateTaskOrders: function () {
+    var tasks = this.props.tasks;
+    tasks.forEach(function(task, key) {
+      task.order = key;
     });
   },
   
@@ -41,26 +41,26 @@ var TodoList = React.createClass({
     if(from < to) to--;
     
     if(from !== to) {
-      TodoActions.reorder(this.props.todos[from], from, to);
+      TaskActions.reorder(this.props.tasks[from], from, to);
       this.setDraggingIndex(to);
     }
     
   },
   
   onDragEnd: function () {
-    this.updateTodoOrders();
+    this.updateTaskOrders();
     this.setDraggingIndex(undefined);
-    TodoActions.saveTodos(this.props.todos);
+    TaskActions.saveTasks(this.props.tasks);
   },
   
-  renderTodoListItems: function (todos) {
+  renderTaskListItems: function (tasks) {
     var items = [];
-    for (var i = 0; i < todos.length; i++) {
+    for (var i = 0; i < tasks.length; i++) {
       var isDragging = this.state.draggingIndex === i ? true : false;
       items.push(
-        <TodoListItem 
+        <TaskListItem 
           key={i} 
-          todo={todos[i]}
+          task={tasks[i]}
           order={i}
           isDragging={isDragging}
           onDragStart={this.onDragStart}
@@ -73,10 +73,10 @@ var TodoList = React.createClass({
   },
   
   render: function () {
-    var todos = this.props.todos;
-    var todoList = (<ol className="todo-list">{this.renderTodoListItems(todos)}</ol>);
+    var tasks = this.props.tasks;
+    var taskList = (<ol className="todo-list">{this.renderTaskListItems(tasks)}</ol>);
     var emptyList = (<div className="todo-list todo-list--empty">Empty</div>);
-    var list = todos.length > 0 ? todoList : emptyList;
+    var list = tasks.length > 0 ? taskList : emptyList;
     
     return (
       list
@@ -85,4 +85,4 @@ var TodoList = React.createClass({
   
 });
 
-module.exports = TodoList;
+module.exports = TaskList;

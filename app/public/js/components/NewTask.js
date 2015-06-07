@@ -1,7 +1,7 @@
 var React = require('react');
-var TodoActions = require('../actions/TodoActions.js');
+var TaskActions = require('../actions/TaskActions.js');
 
-var NewTodo = React.createClass({
+var NewTask = React.createClass({
   
   getInitialState: function () {
     return {
@@ -22,7 +22,7 @@ var NewTodo = React.createClass({
           value={description} 
           onChange={this.handleChange} 
         />
-        <button className="todo-add__button" onClick={this.addTodo} >Add Todo</button>
+        <button className="todo-add__button" onClick={this.addTask} >Add Todo</button>
       </div>
     );
   },
@@ -31,13 +31,13 @@ var NewTodo = React.createClass({
     this.setState({description: event.target.value});
   },
   
-  addTodo: function() {
+  addTask: function() {
     if(!!this.state.description) {
-      TodoActions.saveTodo({description: this.state.description});
+      TaskActions.saveTask({description: this.state.description});
       this.setState(this.getInitialState());
     }
   }
   
 });
 
-module.exports = NewTodo;
+module.exports = NewTask;

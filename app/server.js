@@ -12,23 +12,23 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-var TodoApp = react.createFactory(require('./public/js/components/TodoApp.js'));
+var TaskApp = react.createFactory(require('./public/js/components/TaskApp.js'));
 
 app.get('/', function(req, res) {
   
   request
     .get('http://localhost:5000/api/tasks')
-    .end(function(err, todoRes) {
+    .end(function(err, taskRes) {
       
       var html = react.renderToString(
-        TodoApp({
-          todos: todoRes.body
+        TaskApp({
+          tasks: taskRes.body
         })
       );
       
       res.render('index.ejs', {
         app: html,
-        state: JSON.stringify(todoRes.body)
+        state: JSON.stringify(taskRes.body)
       });
     });
   
