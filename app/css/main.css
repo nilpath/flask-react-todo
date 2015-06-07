@@ -127,17 +127,24 @@ body {
   padding: 15px 20px;
 }
 
+.todo-list__item:hover,
+.todo-list__item--dragging {
+  background-image: url('../images/drag_icon.png');
+  background-repeat: no-repeat;
+  background-position: 96% 50%;
+}
+
 .todo-list__item--done {
   text-decoration: line-through;
   color: #999;
 }
 
 .todo-list__item:nth-child(odd) {
-  background: #f4f7fa;
+  background-color: #f4f7fa;
 }
 
 .todo-list__item--dragging,
 .todo-list__item--dragging:nth-child(odd) {
-  background: #eee;
+  background-color: #eee;
 }
 
