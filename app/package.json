@@ -2,9 +2,9 @@
   "name": "flask-react-todo-app",
   "version": "0.0.0",
   "description": "",
-  "main": "js/app.js",
+  "main": "server.js",
   "scripts": {
-    "start": "watchify -o public/js/bundle.js -v -d public/js/app.js",
+    "start": "node server.js | watchify -o public/js/bundle.js -v -d public/js/app.js",
     "build": "browserify . | uglifyjs -cm > public/js/bundle.min.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
