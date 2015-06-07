@@ -4,10 +4,10 @@ var TodoConstants = require('../contants/TodoConstants.js');
 var TodoAPI = require('../utils/TodoAPI.js');
 var assign = require('object-assign');
 
-var todos = [];
+var _todos = [];
 
 function setTodos(data) {
-  todos = data;
+  _todos = data;
 }
 
 function createTodo(newTodo) {
@@ -15,7 +15,7 @@ function createTodo(newTodo) {
 }
 
 function addTodo(todo) {
-  todos.push(todo);
+  _todos.push(todo);
 }
 
 function updateTodo(todo) {
@@ -29,20 +29,24 @@ function updateAll(updates) {
 }
 
 function reorder(todo, from, to) {
-  todos.splice(to, 0, todos.splice(from,1)[0]);
+  _todos.splice(to, 0, _todos.splice(from,1)[0]);
 }
 
 var TodoStore = assign({}, EventEmitter.prototype, {
   
   getTodos: function () {
-    return todos;
+    return _todos;
+  },
+  
+  setTodos: function (todos) {
+    _todos = todos;
   },
   
   remainingItems: function () {
     var remaining = [];
-    for (var i = 0; i < todos.length; i++) {
-      if(!todos[i].done) {
-        remaining.push(todos[i]);
+    for (var i = 0; i < _todos.length; i++) {
+      if(!_todos[i].done) {
+        remaining.push(_todos[i]);
       }
     }
     return remaining;

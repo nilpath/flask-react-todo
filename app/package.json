@@ -4,8 +4,8 @@
   "description": "",
   "main": "js/app.js",
   "scripts": {
-    "start": "watchify -o js/bundle.js -v -d js/app.js",
-    "build": "browserify . | uglifyjs -cm > js/bundle.min.js",
+    "start": "watchify -o public/js/bundle.js -v -d public/js/app.js",
+    "build": "browserify . | uglifyjs -cm > public/js/bundle.min.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -15,7 +15,12 @@
     "flux": "^2.0.3",
     "react": "^0.13.3",
     "object-assign": "^2.0.0",
-    "superagent": "^1.2.0"
+    "superagent": "^1.2.0",
+    "ejs": "^2.3.1",
+    "express": "^4.12.4",
+    "body-parser": "^1.12.4",
+    "node-jsx": "^0.13.3",
+    "path": "^0.11.14"
   },
   "devDependencies": {
     "uglify-js": "^2.4.23",

@@ -15,6 +15,10 @@ function getState() {
 var TodoApp = React.createClass({
   
   getInitialState: function () {
+    var todos = this.props.todos;
+    if(todos) {
+      TodoStore.setTodos(todos);
+    }
     return getState();
   },
   
