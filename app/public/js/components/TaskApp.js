@@ -1,4 +1,5 @@
 var React = require('react');
+var ReactPropTypes = React.PropTypes; 
 var NewTask = require('./NewTask.js');
 var TaskList = require('./TaskList.js');
 var Footer = require('./Footer.js');
@@ -14,20 +15,22 @@ function getState() {
 
 var TaskApp = React.createClass({
   
+  propTypes: {
+    tasks: ReactPropTypes.array
+  },
+  
   getInitialState: function () {
-    var tasks = this.props.tasks;
-    if(tasks) {
-      TaskStore.setTasks(tasks);
-    }
+    var tasks = this.props.tasks || [];
+    TaskStore.setTasks(tasks);
     return getState();
   },
   
   componentDidMount: function() {
-    TaskStore.addChangeListener(this.onChange);
+    TaskStore.addChangeListener(this._onChange);
   },
 
   componentWillUnmount: function() {
-    TaskStore.removeChangeListener(this.onChange);
+    TaskStore.removeChangeListener(this._onChange);
   },
   
   render: function () {
@@ -36,13 +39,16 @@ var TaskApp = React.createClass({
         <Header />
         <NewTask />
         <TaskList tasks={this.state.tasks} />
-        <Footer remainingItems={this.state.remainingItems} tasks={this.state.tasks}/>
+        <Footer 
+          remainingItems={this.state.remainingItems} 
+          tasks={this.state.tasks}
+        />
       </div>
     );
     
   },
   
-  onChange: function() {
+  _onChange: function() {
     this.setState(getState());
   }
   

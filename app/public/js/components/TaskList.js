@@ -13,25 +13,55 @@ var TaskList = React.createClass({
     return {};
   },
   
-  setDraggingIndex: function (index) {
+  render: function () {
+    var tasks = this.props.tasks;
+    var taskList = (<ol className="todo-list">{this._renderTaskListItems(tasks)}</ol>);
+    var emptyList = (<div className="todo-list todo-list--empty">Empty</div>);
+    var list = tasks.length > 0 ? taskList : emptyList;
+    
+    return (
+      list
+    );
+  },
+  
+  _renderTaskListItems: function (tasks) {
+    var items = [];
+    for (var i = 0; i < tasks.length; i++) {
+      var isDragging = this.state.draggingIndex === i ? true : false;
+      items.push(
+        <TaskListItem 
+          key={i} 
+          order={i}
+          task={tasks[i]}
+          isDragging={isDragging}
+          onDragStart={this._onDragStart}
+          onDragOver={this._onDragOver}
+          onDragEnd={this._onDragEnd}
+        />
+      );
+    }
+    return items;
+  },
+  
+  _setDraggingIndex: function (index) {
     this.setState({draggingIndex: index});
   },
   
-  updateTaskOrders: function () {
+  _updateTaskOrders: function () {
     var tasks = this.props.tasks;
     tasks.forEach(function(task, key) {
       task.order = key;
     });
   },
   
-  onDragStart: function (event) {
+  _onDragStart: function (event) {
     var index = Number(event.currentTarget.dataset.id);
-    this.setDraggingIndex(index);
+    this._setDraggingIndex(index);
     event.dataTransfer.effectAllowed = 'move';
     event.dataTransfer.setData('text/html', null);
   },
   
-  onDragOver: function (event) {
+  _onDragOver: function (event) {
     event.preventDefault();
     var current = event.currentTarget;
     var from = this.state.draggingIndex;
@@ -42,46 +72,16 @@ var TaskList = React.createClass({
     
     if(from !== to) {
       TaskActions.reorder(this.props.tasks[from], from, to);
-      this.setDraggingIndex(to);
+      this._setDraggingIndex(to);
     }
     
   },
   
-  onDragEnd: function () {
-    this.updateTaskOrders();
-    this.setDraggingIndex(undefined);
+  _onDragEnd: function () {
+    this._updateTaskOrders();
+    this._setDraggingIndex(undefined);
     TaskActions.saveTasks(this.props.tasks);
   },
-  
-  renderTaskListItems: function (tasks) {
-    var items = [];
-    for (var i = 0; i < tasks.length; i++) {
-      var isDragging = this.state.draggingIndex === i ? true : false;
-      items.push(
-        <TaskListItem 
-          key={i} 
-          task={tasks[i]}
-          order={i}
-          isDragging={isDragging}
-          onDragStart={this.onDragStart}
-          onDragOver={this.onDragOver}
-          onDragEnd={this.onDragEnd}
-        />
-      );
-    }
-    return items;
-  },
-  
-  render: function () {
-    var tasks = this.props.tasks;
-    var taskList = (<ol className="todo-list">{this.renderTaskListItems(tasks)}</ol>);
-    var emptyList = (<div className="todo-list todo-list--empty">Empty</div>);
-    var list = tasks.length > 0 ? taskList : emptyList;
-    
-    return (
-      list
-    );
-  }
   
 });
 

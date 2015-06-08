@@ -127,6 +127,11 @@ body {
   padding: 15px 20px;
 }
 
+.todo-list__item:hover {
+  cursor: move;
+  cursor: -webkit-grab; cursor: -moz-grab;
+}
+
 .todo-list__item:hover,
 .todo-list__item--dragging {
   background-image: url('../images/drag_icon.png');
@@ -146,5 +151,9 @@ body {
 .todo-list__item--dragging,
 .todo-list__item--dragging:nth-child(odd) {
   background-color: #eee;
+}
+
+.todo-list__item--dragging {
+  cursor: -webkit-grabbing; cursor: -moz-grabbing;
 }
 

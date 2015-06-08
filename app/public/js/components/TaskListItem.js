@@ -1,5 +1,5 @@
 var React = require('react');
-var cx = require('react/lib/cx');
+var classNames = require('classnames');
 var ReactPropTypes = React.PropTypes; 
 var TaskActions = require('../actions/TaskActions.js');
 
@@ -19,7 +19,7 @@ var TaskListItem = React.createClass({
   render: function () {
     var task = this.props.task;
     var isDragging = this.props.isDragging;
-    var classes = cx({
+    var classes = classNames({
       'todo-list__item': true,
       'todo-list__item--dragging': isDragging,
       'todo-list__item--done': task.done
@@ -35,11 +35,11 @@ var TaskListItem = React.createClass({
         onDragEnd={this.props.onDragEnd}
       >
         <input 
+          className="todo__checkbox"
           type="checkbox" 
           id={task._id}
-          className="todo__checkbox"
           checked={task.done} 
-          onChange={this.toggleDone}
+          onChange={this._toggleDone}
         />
         <label htmlFor={task._id}>{task.description}</label>
       </li>
@@ -47,7 +47,7 @@ var TaskListItem = React.createClass({
     
   },
   
-  toggleDone: function () {
+  _toggleDone: function () {
     TaskActions.toggleDone(this.props.task);
   }
   

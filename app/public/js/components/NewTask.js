@@ -20,18 +20,18 @@ var NewTask = React.createClass({
           type="text"
           placeholder="What needs to be done?" 
           value={description} 
-          onChange={this.handleChange} 
+          onChange={this._handleChange} 
         />
-        <button className="todo-add__button" onClick={this.addTask} >Add Todo</button>
+        <button className="todo-add__button" onClick={this._addTask} >Add Todo</button>
       </div>
     );
   },
   
-  handleChange: function (event) {
+  _handleChange: function (event) {
     this.setState({description: event.target.value});
   },
   
-  addTask: function() {
+  _addTask: function() {
     if(!!this.state.description) {
       TaskActions.saveTask({description: this.state.description});
       this.setState(this.getInitialState());

@@ -17,13 +17,13 @@ var Footer = React.createClass({
     return (
       <footer className="todo-footer">
         <span>{remainingText}</span>
-        <button className="todo-footer__link todo--right" onClick={this.completeAll}>Mark all as complete</button>
+        <button className="todo-footer__link todo--right" onClick={this._completeAll}>Mark all as complete</button>
       </footer>
     );
     
   },
   
-  completeAll: function () {
+  _completeAll: function () {
     TaskActions.completeAll(this.props.tasks);
   }
   
