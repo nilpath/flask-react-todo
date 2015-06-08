@@ -7,7 +7,10 @@ var TaskListItem = React.createClass({
   
   propTypes: {
     task: ReactPropTypes.object.isRequired,
-    order: ReactPropTypes.number.isRequired
+    order: ReactPropTypes.number.isRequired,
+    onDragStart: ReactPropTypes.func.isRequired,
+    onDragOver: ReactPropTypes.func.isRequired,
+    onDragEnd: ReactPropTypes.func.isRequired
   },
   
   getInitialState: function () {
@@ -18,16 +21,14 @@ var TaskListItem = React.createClass({
   
   render: function () {
     var task = this.props.task;
-    var isDragging = this.props.isDragging;
     var classes = classNames({
       'todo-list__item': true,
-      'todo-list__item--dragging': isDragging,
       'todo-list__item--done': task.done
     });
     
     return (
       <li 
-        className={classes} 
+        className={classes}
         data-id={this.props.order} 
         draggable="true"
         onDragStart={this.props.onDragStart}

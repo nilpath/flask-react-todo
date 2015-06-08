@@ -1,6 +1,7 @@
 var React = require('react');
 var ReactPropTypes = React.PropTypes;
 var TaskListItem = require('./TaskListItem.js');
+var DraggedItem = require('./DraggedItem.js');
 var TaskActions = require('../actions/TaskActions.js');
 
 var TaskList = React.createClass({
@@ -10,7 +11,10 @@ var TaskList = React.createClass({
   },
   
   getInitialState: function () {
-    return {};
+    return {
+      draggingInfo: {},
+      draggingOrigin: {}
+    };
   },
   
   render: function () {
@@ -39,12 +43,46 @@ var TaskList = React.createClass({
           onDragEnd={this._onDragEnd}
         />
       );
+      
     }
+    
+    if(this.state.dragging) {
+      items.push(<DraggedItem key="9999" task={this.state.dragging} draggingInfo={this.state.draggingInfo} />)
+    }
+    
     return items;
   },
   
   _setDraggingIndex: function (index) {
     this.setState({draggingIndex: index});
+  },
+  
+  _setDragging: function (task) {
+    this.setState({
+      dragging: task
+    });
+  },
+  
+  _setDraggingOrigin: function(originX, originY, elementX, elementY) {
+    this.setState({
+      draggingOrigin: {
+        originX: originX,
+        originY: originY,
+        elementX: elementX,
+        elementY: elementY
+      }
+    });
+  },
+  
+  _setDraggingInfo: function(pageY) {
+    var deltaY = pageY - this.state.draggingOrigin.originY;
+    
+    this.setState({
+      draggingInfo: {
+        left: this.state.draggingOrigin.elementX,
+        top: this.state.draggingOrigin.elementY + deltaY //+ document.body.scrollTop
+      }
+    });
   },
   
   _updateTaskOrders: function () {
@@ -54,21 +92,36 @@ var TaskList = React.createClass({
     });
   },
   
-  _onDragStart: function (event) {
-    var index = Number(event.currentTarget.dataset.id);
-    this._setDraggingIndex(index);
-    event.dataTransfer.effectAllowed = 'move';
-    event.dataTransfer.setData('text/html', null);
-  },
-  
-  _onDragOver: function (event) {
-    event.preventDefault();
+  _calculateToIndex: function(from, event) {
     var current = event.currentTarget;
-    var from = this.state.draggingIndex;
     var to = Number(current.dataset.id);
     
     if((event.clientY - current.offsetTop) > (current.offsetHeight / 2)) to++;
     if(from < to) to--;
+    
+    return to;
+  },
+  
+  _onDragStart: function (event) {
+    var index = Number(event.currentTarget.dataset.id);
+    var rect = event.currentTarget.getBoundingClientRect();
+    
+    this._setDraggingIndex(index);
+    this._setDragging(this.props.tasks[index]);
+    this._setDraggingOrigin(event.pageX, event.pageY, rect.left, rect.top);
+    
+    event.dataTransfer.effectAllowed = 'move';
+    event.dataTransfer.setData('text/html', null);
+    
+  },
+  
+  _onDragOver: function (event) {
+    event.preventDefault();
+    
+    var from = this.state.draggingIndex;
+    var to = this._calculateToIndex(from, event); 
+    
+    this._setDraggingInfo(event.pageY);
     
     if(from !== to) {
       TaskActions.reorder(this.props.tasks[from], from, to);
@@ -80,6 +133,8 @@ var TaskList = React.createClass({
   _onDragEnd: function () {
     this._updateTaskOrders();
     this._setDraggingIndex(undefined);
+    this._setDraggingOrigin(); //undefined
+    this._setDragging(undefined);
     TaskActions.saveTasks(this.props.tasks);
   },
   
