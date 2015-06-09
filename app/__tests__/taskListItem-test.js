@@ -12,7 +12,7 @@ describe('TaskListItem: ', function () {
   
   var task, order, onDragStartFn, onDragOverFn, onDragEndFn;
   
-  beforeEach(function() {
+  beforeEach(function () {
     task = {
       _id: 'asd123',
       description: 'test task one',
@@ -39,7 +39,7 @@ describe('TaskListItem: ', function () {
     );
   }
   
-  it('should render a li element that data-id equal to props.order', function() {
+  it('should render a li element that data-id equal to props.order', function () {
     var TaskListItemElement = renderComponent();
     var li = TestUtils.findRenderedDOMComponentWithTag(TaskListItemElement, 'li');
     
@@ -61,7 +61,7 @@ describe('TaskListItem: ', function () {
     expect(li.getDOMNode().className).toMatch('todo-list__item--done');
   });
   
-  it('should contain a label with the task description', function() {
+  it('should contain a label with the task description', function () {
     var TaskListItemElement = renderComponent();
     var label = TestUtils.findRenderedDOMComponentWithTag(TaskListItemElement, 'label');
     
@@ -77,7 +77,7 @@ describe('TaskListItem: ', function () {
       expect(li.getDOMNode().getAttribute('draggable')).toBeTruthy();
     });
     
-    it('should call onDragStart prop when responding to drag start event', function() {
+    it('should call onDragStart prop when responding to drag start event', function () {
       var TaskListItemElement = renderComponent();
       var li = TestUtils.findRenderedDOMComponentWithTag(TaskListItemElement, 'li');
       TestUtils.Simulate.dragStart(li);
@@ -85,7 +85,7 @@ describe('TaskListItem: ', function () {
       expect(onDragStartFn).toHaveBeenCalled();
     });
     
-    it('should call onDragOver prop when responding to drag over event', function() {
+    it('should call onDragOver prop when responding to drag over event', function () {
       var TaskListItemElement = renderComponent();
       var li = TestUtils.findRenderedDOMComponentWithTag(TaskListItemElement, 'li');
       TestUtils.Simulate.dragOver(li);
@@ -93,7 +93,7 @@ describe('TaskListItem: ', function () {
       expect(onDragOverFn).toHaveBeenCalled();
     });
     
-    it('should call onDragEnd prop when responding to drag end event', function() {
+    it('should call onDragEnd prop when responding to drag end event', function () {
       var TaskListItemElement = renderComponent();
       var li = TestUtils.findRenderedDOMComponentWithTag(TaskListItemElement, 'li');
       TestUtils.Simulate.dragEnd(li);
@@ -105,14 +105,14 @@ describe('TaskListItem: ', function () {
   
   describe('checkbox ', function () {
     
-    it('should not be checked if the task.done is false', function() {
+    it('should not be checked if the task.done is false', function () {
       var TaskListItemElement = renderComponent();
       var checkbox = TestUtils.findRenderedDOMComponentWithTag(TaskListItemElement, 'input');
       
       expect(checkbox.getDOMNode().getAttribute('checked')).toEqual(null);
     });
     
-    it('should be checked if the task is done', function() {
+    it('should be checked if the task is done', function () {
       task.done = true;
       var TaskListItemElement = renderComponent();
       var checkbox = TestUtils.findRenderedDOMComponentWithTag(TaskListItemElement, 'input');
@@ -120,7 +120,7 @@ describe('TaskListItem: ', function () {
       expect(checkbox.getDOMNode().getAttribute('checked')).toEqual('');
     });
     
-    it('should call TaskAction toggleDone when changing state', function() {
+    it('should call TaskAction toggleDone when changing state', function () {
       var spy = spyOn(TaskActions, 'toggleDone');
       var TaskListItemElement = renderComponent();
       var checkbox = TestUtils.findRenderedDOMComponentWithTag(TaskListItemElement, 'input');

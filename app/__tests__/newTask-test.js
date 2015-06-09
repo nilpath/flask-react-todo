@@ -6,7 +6,7 @@ var React = require('react/addons'),
     TaskActions = require('../public/js/actions/TaskActions.js'),
     TestUtils = React.addons.TestUtils;
 
-describe('NewTask: ', function() {
+describe('NewTask: ', function () {
   
   function renderComponent() {
     return TestUtils.renderIntoDocument(
@@ -14,9 +14,9 @@ describe('NewTask: ', function() {
     );
   }
   
-  describe('test input', function() {
+  describe('test input', function () {
     
-    it('should update state.description when the value in the input changes', function() {
+    it('should update state.description when the value in the input changes', function () {
       var NewTaskElement = renderComponent();
       var newDescription = 'test description';
       var input = TestUtils.findRenderedDOMComponentWithTag(NewTaskElement, 'input');
@@ -25,14 +25,14 @@ describe('NewTask: ', function() {
       expect(NewTaskElement.state.description).toEqual(newDescription);
     });
     
-    it('should include a placeholder', function() {
+    it('should include a placeholder', function () {
       var NewTaskElement = renderComponent();
       var input = TestUtils.findRenderedDOMComponentWithTag(NewTaskElement, 'input');
       
       expect(input.getDOMNode().getAttribute('placeholder')).toEqual('What needs to be done?');
     });
     
-    it('should include a value equal to state.description', function() {
+    it('should include a value equal to state.description', function () {
       var NewTaskElement = renderComponent();
       var input = TestUtils.findRenderedDOMComponentWithTag(NewTaskElement, 'input');
       
@@ -45,15 +45,15 @@ describe('NewTask: ', function() {
     
   });
   
-  describe('add button', function() {
+  describe('add button', function () {
     
     var createTaskSpy;
     
-    beforeEach(function(){
+    beforeEach(function (){
       createTaskSpy = spyOn(TaskActions, 'createTask');
     });
     
-    it('should not call createTask action if the state.description is empty', function() {
+    it('should not call createTask action if the state.description is empty', function () {
       var NewTaskElement = renderComponent();
       var button = TestUtils.findRenderedDOMComponentWithTag(NewTaskElement, 'button');
       TestUtils.Simulate.click(button);
@@ -62,7 +62,7 @@ describe('NewTask: ', function() {
       expect(NewTaskElement.state.description).toEqual('');
     });
     
-    it('should call createTask action when clicked if the state.description has a value', function() {
+    it('should call createTask action when clicked if the state.description has a value', function () {
       var NewTaskElement = renderComponent();
       var button = TestUtils.findRenderedDOMComponentWithTag(NewTaskElement, 'button');
       var newDescription = 'test description';
@@ -77,7 +77,7 @@ describe('NewTask: ', function() {
       });
     });
     
-    it('should reset state.description when clicked', function() {
+    it('should reset state.description when clicked', function () {
       var NewTaskElement = renderComponent();
       var button = TestUtils.findRenderedDOMComponentWithTag(NewTaskElement, 'button');
       var newDescription = 'test description';

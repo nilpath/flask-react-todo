@@ -9,11 +9,11 @@ var React = require('react/addons'),
     TaskActions = require('../public/js/actions/TaskActions.js'),
     TestUtils = React.addons.TestUtils;
 
-describe('TaskList: ', function() {
+describe('TaskList: ', function () {
   
   var tasks;
   
-  beforeEach(function() {
+  beforeEach(function () {
     
     tasks = [
       {description: 'test task one', done: false},
@@ -29,7 +29,7 @@ describe('TaskList: ', function() {
     );
   }
   
-  it('should render a empty list if props.task is empty', function() {
+  it('should render a empty list if props.task is empty', function () {
     tasks = [];
     var TaskListElement = renderComponent();
     var emptyList = TestUtils.findRenderedDOMComponentWithTag(TaskListElement, 'div');
@@ -37,7 +37,7 @@ describe('TaskList: ', function() {
     expect(emptyList.getDOMNode().textContent).toEqual('Empty');
   });
   
-  it('should render the same number of todos that there are props.tasks', function() {
+  it('should render the same number of todos that there are props.tasks', function () {
     var TaskListElement = renderComponent();
     var todos = TestUtils.scryRenderedDOMComponentsWithTag(TaskListElement, 'li');
     
@@ -51,11 +51,11 @@ describe('TaskList: ', function() {
     var draggedItem = TestUtils.findRenderedComponentWithType(TaskListElement, DraggedItem);
   });
   
-  describe('drag start event', function() {
+  describe('drag start event', function () {
     
     var event;
     
-    beforeEach(function() {
+    beforeEach(function () {
       event = {
         pageX: 1,
         pageY: 2,
@@ -72,14 +72,14 @@ describe('TaskList: ', function() {
       };
     });
     
-    it('should set the draggingIndex from the currentTarget data-id', function() {
+    it('should set the draggingIndex from the currentTarget data-id', function () {
       var TaskListElement = renderComponent();
       TaskListElement._onDragStart(event);
       
       expect(TaskListElement.state.draggingIndex).toEqual(event.currentTarget.dataset.id);
     });
     
-    it('should set the dragging task', function() {
+    it('should set the dragging task', function () {
       var TaskListElement = renderComponent();
       TaskListElement._onDragStart(event);
       
@@ -98,7 +98,7 @@ describe('TaskList: ', function() {
       });
     });
     
-    it('should set dataTransfer on the event', function() {
+    it('should set dataTransfer on the event', function () {
       var TaskListElement = renderComponent();
       TaskListElement._onDragStart(event);
       
@@ -108,10 +108,10 @@ describe('TaskList: ', function() {
     
   });
   
-  describe('drag over event', function() {
+  describe('drag over event', function () {
     var TaskListElement, calculateToSpy, draggingIndexSpy, reorderSpy, event;
     
-    beforeEach(function() {
+    beforeEach(function () {
       event = {
         pageY: 4,
         preventDefault: jasmine.createSpy('preventDefault'),
@@ -126,13 +126,13 @@ describe('TaskList: ', function() {
       draggingIndexSpy = spyOn(TaskListElement, '_setDraggingIndex');
     });
     
-    it('should call event.preventDefault', function() {
+    it('should call event.preventDefault', function () {
       TaskListElement._onDragOver(event);
       
       expect(event.preventDefault).toHaveBeenCalled();
     });
     
-    it('should set draggingInfo', function() {
+    it('should set draggingInfo', function () {
       TaskListElement.setState({
         draggingOrigin: {
           elementX: 0,
@@ -157,7 +157,7 @@ describe('TaskList: ', function() {
       expect(reorderSpy).toHaveBeenCalledWith(tasks[1], 1, 2);
     });
     
-    it('should update the draggingIndex', function() {
+    it('should update the draggingIndex', function () {
       TaskListElement._onDragOver(event);
       
       expect(draggingIndexSpy).toHaveBeenCalledWith(2);
@@ -165,15 +165,15 @@ describe('TaskList: ', function() {
     
   });
   
-  describe('drag end event', function() {
+  describe('drag end event', function () {
     
     var saveTodosSpy;
     
-    beforeEach(function(){
+    beforeEach(function (){
       saveTodosSpy = spyOn(TaskActions, 'saveTasks');
     });
     
-    it('should update each task.order after the index', function() {
+    it('should update each task.order after the index', function () {
       tasks = [
         {order: 1},
         {order: 0}
@@ -185,7 +185,7 @@ describe('TaskList: ', function() {
       expect(tasks[1].order).toEqual(1);
     });
     
-    it('should reset state', function() {
+    it('should reset state', function () {
       TaskListElement = renderComponent();
       TaskListElement.setState({
         dragging: tasks[0],

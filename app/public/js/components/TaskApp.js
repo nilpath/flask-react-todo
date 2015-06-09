@@ -25,11 +25,11 @@ var TaskApp = React.createClass({
     return getState();
   },
   
-  componentDidMount: function() {
+  componentDidMount: function () {
     TaskStore.addChangeListener(this._onChange);
   },
 
-  componentWillUnmount: function() {
+  componentWillUnmount: function () {
     TaskStore.removeChangeListener(this._onChange);
   },
   
@@ -48,7 +48,7 @@ var TaskApp = React.createClass({
     
   },
   
-  _onChange: function() {
+  _onChange: function () {
     this.setState(getState());
   }
   

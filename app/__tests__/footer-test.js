@@ -6,11 +6,11 @@ var React = require('react/addons'),
     TaskActions = require('../public/js/actions/TaskActions.js'),
     TestUtils = React.addons.TestUtils;
 
-describe('Footer: ', function() {
+describe('Footer: ', function () {
   
   var tasks;
   
-  beforeEach(function() {
+  beforeEach(function () {
     
     tasks = [
       {description: 'test task one', done: false},
@@ -28,7 +28,7 @@ describe('Footer: ', function() {
     );
   }
   
-  it('should show the number of tasks remaining', function() {
+  it('should show the number of tasks remaining', function () {
     var FooterElement = renderComponent();
     var countSpan = TestUtils.findRenderedDOMComponentWithTag(FooterElement, 'span');
     
@@ -51,7 +51,7 @@ describe('Footer: ', function() {
     expect(button.getDOMNode().textContent).toEqual('Mark all as complete');
   });
   
-  it('mark all as complete button should complete all tasks', function() {
+  it('mark all as complete button should complete all tasks', function () {
     var spy = spyOn(TaskActions, 'completeAll');
     var FooterElement = renderComponent();
     var button = TestUtils.findRenderedDOMComponentWithTag(FooterElement, 'button');

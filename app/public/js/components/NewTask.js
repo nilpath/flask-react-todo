@@ -31,7 +31,7 @@ var NewTask = React.createClass({
     this.setState({description: event.target.value});
   },
   
-  _addTask: function() {
+  _addTask: function () {
     if(!!this.state.description) {
       TaskActions.createTask({description: this.state.description});
       this.setState(this.getInitialState());
