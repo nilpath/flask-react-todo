@@ -59,13 +59,18 @@ var TaskActions = {
   },
   
   completeAll: function (tasks) {
-    var toUpdate = [];
-    for(var i = 0; i < tasks.length; i++) {
-      if(!tasks[i].done) {
-        tasks[i].done = true;
-        toUpdate.push(tasks[i]);
-      }
+    
+    function notDone(task) {
+      return !task.done;
     }
+    
+    var toUpdate = tasks
+      .filter(notDone)
+      .map(function(task){
+        task.done = true;
+        return task;
+      });
+    
     
     AppDispatcher.dispatch({
       actionType: TaskConstants.SAVE_TODOS,

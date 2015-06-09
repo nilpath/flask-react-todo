@@ -23,9 +23,9 @@ function updateTask(task) {
 }
 
 function updateAll(updates) {
-  for (var i = 0; i < updates.length; i++) {
-    updateTask(updates[i]);
-  }
+  updates.forEach(function(update) {
+    updateTask(update);
+  });
 }
 
 function reorder(task, from, to) {
@@ -43,13 +43,9 @@ var TaskStore = assign({}, EventEmitter.prototype, {
   },
   
   remainingItems: function () {
-    var remaining = [];
-    for (var i = 0; i < _tasks.length; i++) {
-      if(!_tasks[i].done) {
-        remaining.push(_tasks[i]);
-      }
-    }
-    return remaining;
+    return _tasks.filter(function(task){
+      return !task.done;
+    });
   },
   
   emitChange: function () {

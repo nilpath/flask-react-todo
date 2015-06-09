@@ -29,20 +29,21 @@ var TaskList = React.createClass({
   },
   
   _renderTaskListItems: function (tasks) {
-    var items = [];
-    for (var i = 0; i < tasks.length; i++) {
-      items.push(
+    
+    function createListItem(task, index) {
+      return (
         <TaskListItem 
-          key={i} 
-          order={i}
-          task={tasks[i]}
+          key={index} 
+          order={index}
+          task={task}
           onDragStart={this._onDragStart}
           onDragOver={this._onDragOver}
           onDragEnd={this._onDragEnd}
         />
       );
-      
     }
+    
+    var items = tasks.map(createListItem.bind(this));
     
     if(this.state.dragging) {
       items.push(
