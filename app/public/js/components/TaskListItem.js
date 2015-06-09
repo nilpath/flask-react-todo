@@ -13,12 +13,6 @@ var TaskListItem = React.createClass({
     onDragEnd: ReactPropTypes.func.isRequired
   },
   
-  getInitialState: function () {
-    return {
-      task: this.props.task
-    };
-  },
-  
   render: function () {
     var task = this.props.task;
     var classes = classNames({

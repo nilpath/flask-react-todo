@@ -31,13 +31,11 @@ var TaskList = React.createClass({
   _renderTaskListItems: function (tasks) {
     var items = [];
     for (var i = 0; i < tasks.length; i++) {
-      var isDragging = this.state.draggingIndex === i ? true : false;
       items.push(
         <TaskListItem 
           key={i} 
           order={i}
           task={tasks[i]}
-          isDragging={isDragging}
           onDragStart={this._onDragStart}
           onDragOver={this._onDragOver}
           onDragEnd={this._onDragEnd}
@@ -47,7 +45,13 @@ var TaskList = React.createClass({
     }
     
     if(this.state.dragging) {
-      items.push(<DraggedItem key="9999" task={this.state.dragging} draggingInfo={this.state.draggingInfo} />)
+      items.push(
+        <DraggedItem 
+          key="9999" 
+          task={this.state.dragging} 
+          draggingInfo={this.state.draggingInfo} 
+        />
+      );
     }
     
     return items;
@@ -80,7 +84,7 @@ var TaskList = React.createClass({
     this.setState({
       draggingInfo: {
         left: this.state.draggingOrigin.elementX,
-        top: this.state.draggingOrigin.elementY + deltaY //+ document.body.scrollTop
+        top: this.state.draggingOrigin.elementY + deltaY
       }
     });
   },
@@ -135,6 +139,9 @@ var TaskList = React.createClass({
     this._setDraggingIndex(undefined);
     this._setDraggingOrigin(); //undefined
     this._setDragging(undefined);
+    this.setState({
+      draggingInfo: {}
+    });
     TaskActions.saveTasks(this.props.tasks);
   },
   

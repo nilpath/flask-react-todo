@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js | watchify -o public/js/bundle.js -v -d public/js/app.js",
     "build": "browserify . | uglifyjs -cm > public/js/bundle.min.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
@@ -24,14 +24,22 @@
     "classnames": "^2.1.2"
   },
   "devDependencies": {
-    "uglify-js": "^2.4.23",
-    "watchify": "^3.2.1",
     "browserify": "^10.2.3",
-    "reactify": "^1.1.1"
+    "jasmine-react": "^1.1.0",
+    "jest-cli": "^0.4.7",
+    "reactify": "^1.1.1",
+    "uglify-js": "^2.4.23",
+    "watchify": "^3.2.1"
   },
   "browserify": {
     "transform": [
       "reactify"
+    ]
+  },
+  "jest": {
+    "scriptPreprocessor": "<rootDir>/support/preprocessor.js",
+    "unmockedModulePathPatterns": [
+      "<rootDir>/node_modules/react"
     ]
   }
 }
