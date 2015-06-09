@@ -17,6 +17,13 @@ var TaskActions = {
     });
   },
   
+  createTask: function (newTask) {
+    AppDispatcher.dispatch({
+      actionType: TaskConstants.CREATE_TODO,
+      data: newTask
+    });
+  },
+  
   addTask: function (task) {
     AppDispatcher.dispatch({
       actionType: TaskConstants.ADD_TODO,
