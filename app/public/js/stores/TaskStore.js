@@ -38,6 +38,8 @@ var TaskStore = assign({}, EventEmitter.prototype, {
     return _tasks;
   },
   
+  //Stores should in general not have setters.
+  //Used for syncing state with server rendered react app. 
   setTasks: function (tasks) {
     _tasks = tasks;
   },
