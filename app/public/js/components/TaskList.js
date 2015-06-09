@@ -85,7 +85,7 @@ var TaskList = React.createClass({
     this.setState({
       draggingInfo: {
         left: this.state.draggingOrigin.elementX,
-        top: this.state.draggingOrigin.elementY + deltaY
+        top: this.state.draggingOrigin.elementY + deltaY + document.body.scrollTop
       }
     });
   },
