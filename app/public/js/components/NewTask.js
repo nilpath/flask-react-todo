@@ -14,16 +14,17 @@ var NewTask = React.createClass({
     var description = this.state.description;
     
     return (
-      <div className="todo-add">
+      <form action="/tasks/new" method="post" className="todo-add">
         <input 
           className="todo-add__input" 
           type="text"
+          name="description"
           placeholder="What needs to be done?" 
           value={description} 
           onChange={this._handleChange} 
         />
         <button className="todo-add__button" onClick={this._addTask} >Add Todo</button>
-      </div>
+      </form>
     );
   },
   
@@ -31,7 +32,8 @@ var NewTask = React.createClass({
     this.setState({description: event.target.value});
   },
   
-  _addTask: function () {
+  _addTask: function (event) {
+    event.preventDefault();
     if(!!this.state.description) {
       TaskActions.createTask({description: this.state.description});
       this.setState(this.getInitialState());

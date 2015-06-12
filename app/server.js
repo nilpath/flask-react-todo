@@ -8,11 +8,15 @@ var bodyParser = require('body-parser');
 
 require('node-jsx').install();
 
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-var TaskApp = react.createFactory(require('./public/js/components/TaskApp.js'));
+var TodoApp = react.createFactory(require('./public/js/components/TodoApp.js'));
 
 app.get('/', function(req, res) {
   
@@ -21,7 +25,7 @@ app.get('/', function(req, res) {
     .end(function(err, taskRes) {
       
       var html = react.renderToString(
-        TaskApp({
+        TodoApp({
           tasks: taskRes.body
         })
       );
@@ -34,4 +38,23 @@ app.get('/', function(req, res) {
   
 });
 
-app.listen(port);
+app.post('/tasks/new', function(req, res) {
+  var description = req.body.description;
+  
+  if(description) {
+    request
+      .post('http://localhost:5000/api/tasks')
+      .send({description: description})
+      .end(function(error){
+        if(error) {
+          console.log('failed to save new todo: ', error);
+        }
+        res.redirect('/');
+      });
+  }
+  
+});
+
+app.listen(port, function(){
+  console.log('listening on port: ', port);
+});

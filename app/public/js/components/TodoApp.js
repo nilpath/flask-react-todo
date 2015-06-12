@@ -13,7 +13,7 @@ function getState() {
   };
 }
 
-var TaskApp = React.createClass({
+var TodoApp = React.createClass({
   
   propTypes: {
     tasks: ReactPropTypes.array
@@ -54,4 +54,4 @@ var TaskApp = React.createClass({
   
 });
 
-module.exports = TaskApp;
+module.exports = TodoApp;

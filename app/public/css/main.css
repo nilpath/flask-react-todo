@@ -81,6 +81,7 @@ body {
 
 .todo-add {
   padding: 20px;
+  margin: 0;
 }
 
 .todo-add__input {
