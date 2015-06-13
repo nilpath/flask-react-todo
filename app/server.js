@@ -75,6 +75,41 @@ app.post('/tasks/:id/toggle', function (req, res) {
   }
 });
 
+app.post('/tasks/allDone', function (req, res) {
+  
+  request
+    .get('http://localhost:5000/api/tasks')
+    .end(function(err, taskRes) {
+      var tasks = taskRes.body;
+      
+      if(tasks) {
+        var undone = tasks.filter(function (task) {
+          return !tasks.done;
+        });
+        
+        undone.forEach(function (task) {
+          var id = task._id;
+          var url = ['http://localhost:5000/api/tasks/', id].join('');
+          task.done = true;
+          
+          request
+            .put(url)
+            .send(task)
+            .end(function (error) {
+              if(error) {
+                console.log('failed to update task: ', error);
+              }
+            });
+          
+        });
+        
+        res.redirect('/');
+      }
+      
+    });
+  
+});
+
 app.listen(port, function(){
   console.log('listening on port: ', port);
 });
