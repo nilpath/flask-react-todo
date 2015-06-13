@@ -128,6 +128,19 @@ body {
   padding: 15px 20px;
 }
 
+.todo-list__item form {
+  margin: 0;
+}
+
+.todo-list__item button {
+  border: none;
+  background-color: transparent;
+}
+
+.todo-list__item button:focus {
+  outline: none;
+}
+
 .todo-list__item--dragging {
   
 }
@@ -141,6 +154,11 @@ body {
 }
 
 .todo-list__item--done {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.todo-list__item--done button {
   text-decoration: line-through;
   color: #999;
 }

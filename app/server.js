@@ -47,12 +47,32 @@ app.post('/tasks/new', function(req, res) {
       .send({description: description})
       .end(function(error){
         if(error) {
-          console.log('failed to save new todo: ', error);
+          console.log('failed to save new task: ', error);
         }
         res.redirect('/');
       });
   }
   
+});
+
+app.post('/tasks/:id/toggle', function (req, res) {
+  var id = req.params.id;
+  var done = !!req.body.done;
+  var order = Number(req.body.order);
+  var description = req.body.description;
+  var url = ['http://localhost:5000/api/tasks/', id].join('');
+  
+  if(id) {
+    request
+      .put(url)
+      .send({done: done, description: description, order: order})
+      .end(function (error) {
+        if(error) {
+          console.log('failed to update task: ', error);
+        }
+        res.redirect('/');
+      });
+  }
 });
 
 app.listen(port, function(){
