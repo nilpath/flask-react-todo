@@ -107,7 +107,7 @@ describe('TaskListItem: ', function () {
     
     it('should not be checked if the task.done is false', function () {
       var TaskListItemElement = renderComponent();
-      var checkbox = TestUtils.findRenderedDOMComponentWithClass(TaskListItemElement, 'todo__checkbox');
+      var checkbox = TestUtils.findRenderedDOMComponentWithTag(TaskListItemElement, 'input');
       
       expect(checkbox.getDOMNode().getAttribute('checked')).toEqual(null);
     });
@@ -115,7 +115,7 @@ describe('TaskListItem: ', function () {
     it('should be checked if the task is done', function () {
       task.done = true;
       var TaskListItemElement = renderComponent();
-      var checkbox = TestUtils.findRenderedDOMComponentWithClass(TaskListItemElement, 'todo__checkbox');
+      var checkbox = TestUtils.findRenderedDOMComponentWithTag(TaskListItemElement, 'input');
       
       expect(checkbox.getDOMNode().getAttribute('checked')).toEqual('');
     });
@@ -123,7 +123,7 @@ describe('TaskListItem: ', function () {
     it('should call TaskAction toggleDone when changing state', function () {
       var spy = spyOn(TaskActions, 'toggleDone');
       var TaskListItemElement = renderComponent();
-      var checkbox = TestUtils.findRenderedDOMComponentWithClass(TaskListItemElement, 'todo__checkbox');
+      var checkbox = TestUtils.findRenderedDOMComponentWithTag(TaskListItemElement, 'input');
       TestUtils.Simulate.change(checkbox);
       
       expect(spy).toHaveBeenCalled();
