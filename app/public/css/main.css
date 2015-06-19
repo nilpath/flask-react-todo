@@ -72,6 +72,10 @@ body {
   font-size: 13px;
 }
 
+.todo-footer form {
+  margin: 0;
+}
+
 .todo-footer__link {
   border: none;
   background: transparent;
