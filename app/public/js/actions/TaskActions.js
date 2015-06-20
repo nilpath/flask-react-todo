@@ -1,37 +1,37 @@
-var AppDispatcher = require('../dispatcher/AppDispatcher.js');
-var TaskConstants = require('../contants/TaskConstants.js');
+import AppDispatcher from '../dispatcher/AppDispatcher.js';
+import TaskConstants from '../contants/TaskConstants.js';
 
-var TaskActions = {
+export default {
   
-  setTasks: function (data) {
+  setTasks(tasks) {
     AppDispatcher.dispatch({
       actionType: TaskConstants.SET_TODOS,
-      data: data
+      data: tasks
     });
   },
   
-  saveTask: function (newTask) {
+  saveTask(newTask) {
     AppDispatcher.dispatch({
       actionType: TaskConstants.SAVE_TODO,
       data: newTask
     });
   },
   
-  createTask: function (newTask) {
+  createTask(newTask) {
     AppDispatcher.dispatch({
       actionType: TaskConstants.CREATE_TODO,
       data: newTask
     });
   },
   
-  addTask: function (task) {
+  addTask(task) {
     AppDispatcher.dispatch({
       actionType: TaskConstants.ADD_TODO,
       data: task
     });
   },
   
-  reorder: function (task, from, to) {
+  reorder(task, from, to) {
     AppDispatcher.dispatch({
       actionType: TaskConstants.REORDER,
       data: {
@@ -42,14 +42,14 @@ var TaskActions = {
     });
   },
   
-  saveTasks: function (tasks) {
+  saveTasks(tasks) {
     AppDispatcher.dispatch({
       actionType: TaskConstants.SAVE_TODOS,
       data: tasks
     });
   },
   
-  toggleDone: function (task) {
+  toggleDone(task) {
     task.done = !task.done;
     
     AppDispatcher.dispatch({
@@ -58,19 +58,14 @@ var TaskActions = {
     });
   },
   
-  completeAll: function (tasks) {
+  completeAll(tasks) {
     
-    function notDone(task) {
-      return !task.done;
-    }
-    
-    var toUpdate = tasks
-      .filter(notDone)
-      .map(function(task){
+    let toUpdate = tasks
+      .filter(task => !task.done)
+      .map(task => {
         task.done = true;
         return task;
       });
-    
     
     AppDispatcher.dispatch({
       actionType: TaskConstants.SAVE_TODOS,
@@ -79,6 +74,3 @@ var TaskActions = {
   }
   
 };
-
-
-module.exports = TaskActions;

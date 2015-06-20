@@ -1,14 +1,14 @@
-var express = require('express');
-var path = require('path');
-var app = express();
-var request = require('superagent');
-var port = 8001;
-var react = require('react');
-var bodyParser = require('body-parser');
+import express from 'express';
+import path from 'path';
+import request from 'superagent';
+import react from 'react';
+import todoapp from './public/js/components/TodoApp.js';
+import bodyParser from 'body-parser';
 
-require('node-jsx').install();
-
-var TodoApp = react.createFactory(require('./public/js/components/TodoApp.js'));
+let port = 8001;
+let app = express();
+let TodoApp = react.createFactory(todoapp);
+const BASE_API_URL = 'http://localhost:5000/api/tasks';
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -23,9 +23,11 @@ function getTasks(cb) {
   if(!cb) { return; }
     
   request
-    .get('http://localhost:5000/api/tasks')
-    .end(function(err, res) {
-      cb(res.body);
+    .get(BASE_API_URL)
+    .end((err, res) => {
+      if(!err) {
+        cb(res.body);
+      }
     });
     
 }
@@ -34,9 +36,9 @@ function newTask(task, cb) {
   if(!task) { return; }
   
   request
-    .post('http://localhost:5000/api/tasks')
+    .post(BASE_API_URL)
     .send(task)
-    .end(function(error){
+    .end(error => {
       if(error) {
         console.log('failed to save new task: ', error);
       }
@@ -49,12 +51,12 @@ function newTask(task, cb) {
 function updateTask(task, cb) {
   if(!task) { return; }
   
-  var url = ['http://localhost:5000/api/tasks/', task._id].join('');
+  let url = `${BASE_API_URL}/${task._id}`;
   
   request
     .put(url)
     .send(task)
-    .end(function (error) {
+    .end(error => {
       if(error) {
         console.log('failed to update task: ', error);
       }
@@ -65,10 +67,10 @@ function updateTask(task, cb) {
 }
 
 // routes
-app.get('/', function(req, res) {
+app.get('/', (req, res) => {
   
-  getTasks(function (tasks) {
-    var html = react.renderToString(
+  getTasks(tasks => {
+    let html = react.renderToString(
       TodoApp({
         tasks: tasks
       })
@@ -82,39 +84,33 @@ app.get('/', function(req, res) {
   
 });
 
-app.post('/tasks/new', function(req, res) {
-  var description = req.body.description;
+app.post('/tasks/new', (req, res) => {
+  let description = req.body.description;
   
   if(description) {
-    newTask({description: description}, function() {
-      res.redirect('/');
-    });
+    newTask({description: description}, () => res.redirect('/') );
   }
   
 });
 
-app.post('/tasks/:id/toggle', function (req, res) {
-  var id = req.params.id;
-  var done = !!req.body.done;
-  var order = Number(req.body.order);
-  var description = req.body.description;
-  var task = {_id: id, description: description, order: order, done: done};
+app.post('/tasks/:id/toggle', (req, res) => {
+  let id = req.params.id;
+  let done = !!req.body.done;
+  let order = Number(req.body.order);
+  let description = req.body.description;
+  let task = {_id: id, description: description, order: order, done: done};
   
   if(id) {
-    updateTask(task, function () {
-      res.redirect('/');
-    });
+    updateTask(task, () => res.redirect('/'));
   }
 });
 
-app.post('/tasks/allDone', function (req, res) {
+app.post('/tasks/allDone', (req, res) => {
   
-  getTasks(function (tasks) {
-    var undone = tasks.filter(function (task) {
-      return !tasks.done;
-    });
+  getTasks(tasks => {
+    let undone = tasks.filter(task => !tasks.done );
     
-    undone.forEach(function (task) {
+    undone.forEach(task => {
       task.done = true;
       updateTask(task);
     });
@@ -125,6 +121,4 @@ app.post('/tasks/allDone', function (req, res) {
   
 });
 
-app.listen(port, function(){
-  console.log('listening on port: ', port);
-});
+app.listen(port, () => console.log('listening on port: ', port));

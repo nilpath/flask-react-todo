@@ -1,10 +1,10 @@
-var AppDispatcher = require('../dispatcher/AppDispatcher.js');
-var EventEmitter = require('events').EventEmitter;
-var TaskConstants = require('../contants/TaskConstants.js');
-var TaskAPI = require('../utils/TaskAPI.js');
-var assign = require('object-assign');
+import AppDispatcher from '../dispatcher/AppDispatcher.js';
+import {EventEmitter} from 'events';
+import TaskConstants from '../contants/TaskConstants.js';
+import TaskAPI from '../utils/TaskAPI.js';
+import assign from 'object-assign';
 
-var _tasks = [];
+let _tasks = [];
 
 function setTasks(data) {
   _tasks = data;
@@ -22,49 +22,45 @@ function updateTask(task) {
   TaskAPI.updateTask(task);
 }
 
-function updateAll(updates) {
-  updates.forEach(function(update) {
-    updateTask(update);
-  });
+function updateAll(tasks) {
+  tasks.forEach(task => updateTask(task));
 }
 
 function reorder(task, from, to) {
   _tasks.splice(to, 0, _tasks.splice(from,1)[0]);
 }
 
-var TaskStore = assign({}, EventEmitter.prototype, {
+let TaskStore = assign({}, EventEmitter.prototype, {
   
-  getTasks: function () {
+  getTasks() {
     return _tasks;
   },
   
   //Stores should in general not have setters.
   //Used for syncing state with server rendered react app. 
-  setTasks: function (tasks) {
+  setTasks(tasks) {
     _tasks = tasks;
   },
   
-  remainingItems: function () {
-    return _tasks.filter(function(task){
-      return !task.done;
-    });
+  remainingItems() {
+    return _tasks.filter(task => !task.done);
   },
   
-  emitChange: function () {
+  emitChange() {
     this.emit('change');
   },
   
-  addChangeListener: function (callback) {
+  addChangeListener(callback) {
     this.addListener('change', callback);
   },
   
-  removeChangeListener: function (callback) {
+  removeChangeListener(callback) {
     this.removeListener('change', callback);
   }
   
 });
 
-AppDispatcher.register(function(payload) {
+AppDispatcher.register(payload => {
   switch (payload.actionType) {
     case TaskConstants.SET_TODOS:
       setTasks(payload.data);
@@ -102,4 +98,4 @@ AppDispatcher.register(function(payload) {
   
 });
 
-module.exports = TaskStore;
+export default TaskStore;

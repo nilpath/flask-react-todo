@@ -1,40 +1,37 @@
-var request = require('superagent');
-var TaskActions = require('../actions/TaskActions.js');
+import request from 'superagent';
+import TaskActions from '../actions/TaskActions.js';
 
-var ENDPOINTS = {
-  LIST_AND_SAVE: 'http://localhost:5000/api/tasks',
-  GET_UPDATE_DELETE: 'http://localhost:5000/api/tasks/'
-};
+const BASE_API_URL = 'http://localhost:5000/api/tasks';
 
-module.exports = {
+export default {
   
-  fetchTasks: function () {
+  fetchTasks() {
     request
-      .get(ENDPOINTS.LIST_AND_SAVE)
-      .end(function(err, res) {
+      .get(BASE_API_URL)
+      .end((err, res) => {
         if(!err) {
           TaskActions.setTasks(res.body);
         }
       });
   },
   
-  updateTask: function (task) {
-    var url = [ENDPOINTS.GET_UPDATE_DELETE, task._id].join('');
+  updateTask(task) {
+    let url = `${BASE_API_URL}/${task._id}`;
     request
       .put(url)
       .send(task)
-      .end(function(err, res) {
+      .end((err, res) => {
         if(err) {
           console.log(err);
         }
       });  
   },
   
-  createTask: function (newTask) {
+  createTask(newTask) {
     request
-      .post(ENDPOINTS.LIST_AND_SAVE)
+      .post(BASE_API_URL)
       .send(newTask)
-      .end(function(err, res) {
+      .end((err, res) => {
         if(!err) {
           TaskActions.addTask(res.body);
         }

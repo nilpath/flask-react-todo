@@ -1,18 +1,19 @@
-var React = require('react');
-var ReactPropTypes = React.PropTypes;
-var TaskActions = require('../actions/TaskActions.js');
+import React from 'react';
+import TaskActions from '../actions/TaskActions.js';
 
-var Footer = React.createClass({
+const ReactPropTypes = React.PropTypes;
+
+export default React.createClass({
   
   propTypes: {
     tasks: ReactPropTypes.array.isRequired,
     remainingItems: ReactPropTypes.array.isRequired
   },
   
-  render: function () {
-    var count = this.props.remainingItems.length;
-    var plural = count === 1 ? '' : 's';
-    var remainingText = [count, ' item', plural, ' left'].join('');
+  render() {
+    let count = this.props.remainingItems.length;
+    let plural = count === 1 ? '' : 's';
+    let remainingText = `${count} item${plural} left`;
     
     return (
       <footer className="todo-footer">
@@ -25,11 +26,9 @@ var Footer = React.createClass({
     
   },
   
-  _completeAll: function (event) {
+  _completeAll(event) {
     event.preventDefault();
     TaskActions.completeAll(this.props.tasks);
   }
   
 });
-
-module.exports = Footer;

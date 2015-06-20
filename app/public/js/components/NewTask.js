@@ -1,17 +1,17 @@
-var React = require('react');
-var TaskActions = require('../actions/TaskActions.js');
+import React from 'react';
+import TaskActions from '../actions/TaskActions.js';
 
-var NewTask = React.createClass({
+export default React.createClass({
   
-  getInitialState: function () {
+  getInitialState() {
     return {
       description: ''
     };
   },
   
-  render: function () {
+  render() {
     
-    var description = this.state.description;
+    let description = this.state.description;
     
     return (
       <form action="/tasks/new" method="post" className="todo-add">
@@ -28,11 +28,11 @@ var NewTask = React.createClass({
     );
   },
   
-  _handleChange: function (event) {
+  _handleChange(event) {
     this.setState({description: event.target.value});
   },
   
-  _addTask: function (event) {
+  _addTask(event) {
     event.preventDefault();
     if(!!this.state.description) {
       TaskActions.createTask({description: this.state.description});
@@ -41,5 +41,3 @@ var NewTask = React.createClass({
   }
   
 });
-
-module.exports = NewTask;

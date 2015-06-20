@@ -1,9 +1,10 @@
-var React = require('react');
-var classNames = require('classnames');
-var ReactPropTypes = React.PropTypes; 
-var TaskActions = require('../actions/TaskActions.js');
+import React from 'react';
+import classNames from 'classnames';
+import TaskActions from '../actions/TaskActions.js';
 
-var TaskListItem = React.createClass({
+const ReactPropTypes = React.PropTypes;
+
+export default React.createClass({
   
   propTypes: {
     task: ReactPropTypes.object.isRequired,
@@ -13,9 +14,9 @@ var TaskListItem = React.createClass({
     onDragEnd: ReactPropTypes.func.isRequired
   },
   
-  render: function () {
-    var task = this.props.task;
-    var classes = classNames({
+  render() {
+    let task = this.props.task;
+    let classes = classNames({
       'todo-list__item': true,
       'todo-list__item--done': task.done
     });
@@ -42,10 +43,8 @@ var TaskListItem = React.createClass({
     
   },
   
-  _toggleDone: function () {
+  _toggleDone() {
     TaskActions.toggleDone(this.props.task);
   }
   
 });
-
-module.exports = TaskListItem;

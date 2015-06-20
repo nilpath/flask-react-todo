@@ -1,8 +1,8 @@
-var React = require('react');
+import React from 'react';
 
-var Header = React.createClass({
+export default React.createClass({
   
-  render: function () {
+  render() {
     return (
       <header className="todo-header">
         <h1>Todos</h1>
@@ -11,5 +11,3 @@ var Header = React.createClass({
   }
   
 });
-
-module.exports = Header;

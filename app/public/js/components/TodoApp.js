@@ -1,10 +1,11 @@
-var React = require('react');
-var ReactPropTypes = React.PropTypes; 
-var NewTask = require('./NewTask.js');
-var TaskList = require('./TaskList.js');
-var Footer = require('./Footer.js');
-var Header = require('./Header.js');
-var TaskStore = require('../stores/TaskStore.js');
+import React from 'react';
+import NewTask from './NewTask.js';
+import TaskList from './TaskList.js';
+import Footer from './Footer.js';
+import Header from './Header.js';
+import TaskStore from '../stores/TaskStore.js';
+
+const ReactPropTypes = React.PropTypes; 
 
 function getState() {
   return {
@@ -13,27 +14,27 @@ function getState() {
   };
 }
 
-var TodoApp = React.createClass({
+export default React.createClass({
   
   propTypes: {
     tasks: ReactPropTypes.array
   },
   
-  getInitialState: function () {
-    var tasks = this.props.tasks || [];
+  getInitialState() {
+    let tasks = this.props.tasks || [];
     TaskStore.setTasks(tasks);
     return getState();
   },
   
-  componentDidMount: function () {
+  componentDidMount() {
     TaskStore.addChangeListener(this._onChange);
   },
 
-  componentWillUnmount: function () {
+  componentWillUnmount() {
     TaskStore.removeChangeListener(this._onChange);
   },
   
-  render: function () {
+  render() {
     return (
       <div>
         <Header />
@@ -48,10 +49,8 @@ var TodoApp = React.createClass({
     
   },
   
-  _onChange: function () {
+  _onChange() {
     this.setState(getState());
   }
   
 });
-
-module.exports = TodoApp;

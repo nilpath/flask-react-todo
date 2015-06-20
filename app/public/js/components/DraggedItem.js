@@ -1,23 +1,25 @@
-var React = require('react');
-var classNames = require('classnames');
-var ReactPropTypes = React.PropTypes; 
+import React from 'react';
+import classNames from 'classnames';
 
-var DraggedItem = React.createClass({
+const ReactPropTypes = React.PropTypes; 
+
+export default React.createClass({
   PropTypes: {
     task: ReactPropTypes.object.isRequired
   },
   
-  render: function () {
-    var classes = classNames({
+  render() {
+    let classes = classNames({
       'todo-list__item': true,
       'todo-list__item--dragging': true,
       'todo-list__item--done': this.props.task.done
     });
     
-    var styles = {};
-    styles.position = 'absolute';
-    styles.top = this.props.draggingInfo.top;
-    styles.left = this.props.draggingInfo.left;
+    let styles = {
+      position: 'absolute',
+      top: this.props.draggingInfo.top,
+      left: this.props.draggingInfo.left
+    };
     
     return (
       <li className={classes} style={styles}>
@@ -27,5 +29,3 @@ var DraggedItem = React.createClass({
     );
   },
 });
-
-module.exports = DraggedItem;
