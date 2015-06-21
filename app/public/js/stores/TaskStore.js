@@ -11,7 +11,11 @@ function setTasks(data) {
 }
 
 function createTask(newTask) {
-  TaskAPI.createTask(newTask);
+  TaskAPI.createTask(newTask, (err, res) => {
+    if(!err) {
+      TaskActions.addTask(res.body);
+    }
+  });
 }
 
 function addTask(task) {

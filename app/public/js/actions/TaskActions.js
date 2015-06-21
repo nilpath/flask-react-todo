@@ -34,11 +34,7 @@ export default {
   reorder(task, from, to) {
     AppDispatcher.dispatch({
       actionType: TaskConstants.REORDER,
-      data: {
-        task: task,
-        from: from,
-        to: to
-      }
+      data: { task, from, to }
     });
   },
   

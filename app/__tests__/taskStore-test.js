@@ -97,7 +97,7 @@ describe('TaskStore: ', function () {
   it('should call the server when responding to CREATE_TODO action', function () {
     var createTaskSpy = spyOn(TaskAPI, 'createTask');
     callback(mockActions.createTodoAction);
-    expect(createTaskSpy).toHaveBeenCalledWith(mockActions.createTodoAction.data);
+    expect(createTaskSpy).toHaveBeenCalledWith(mockActions.createTodoAction.data, function(){});
   });
   
   it('should update the tasks list with a new task when responding to ADD_TODO', function () {
