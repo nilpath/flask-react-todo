@@ -4,8 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "./node_modules/.bin/babel-node server.js | watchify -o public/js/bundle.js -v -d public/js/app.js",
-    "build": "browserify . | uglifyjs -cm > public/js/bundle.min.js",
+    "start": "./node_modules/.bin/babel-node server.js",
+    "build": "watchify -o public/js/bundle.js -v -d public/js/app.js",
     "test": "jest"
   },
   "author": "",
