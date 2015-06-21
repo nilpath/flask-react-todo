@@ -1,14 +1,15 @@
 import React from 'react';
+import BaseComponent from './BaseComponent.js';
 import TaskActions from '../actions/TaskActions.js';
 
 const ReactPropTypes = React.PropTypes;
 
-export default React.createClass({
+export default class Footer extends BaseComponent {
   
-  propTypes: {
-    tasks: ReactPropTypes.array.isRequired,
-    remainingItems: ReactPropTypes.array.isRequired
-  },
+  constructor(props) {
+    super(props);
+    this._bind(['_completeAll']);
+  }
   
   render() {
     let count = this.props.remainingItems.length;
@@ -24,11 +25,16 @@ export default React.createClass({
       </footer>
     );
     
-  },
+  }
   
   _completeAll(event) {
     event.preventDefault();
     TaskActions.completeAll(this.props.tasks);
   }
   
-});
+}
+
+Footer.propTypes = {
+  tasks: ReactPropTypes.array.isRequired,
+  remainingItems: ReactPropTypes.array.isRequired
+};

@@ -1,12 +1,14 @@
 import React from 'react';
+import BaseComponent from './BaseComponent.js';
 import classNames from 'classnames';
 
 const ReactPropTypes = React.PropTypes; 
 
-export default React.createClass({
-  PropTypes: {
-    task: ReactPropTypes.object.isRequired
-  },
+export default class DraggedItem extends BaseComponent {
+  
+  constructor(props) {
+    super(props);
+  }
   
   render() {
     let classes = classNames({
@@ -27,5 +29,9 @@ export default React.createClass({
         <label>{this.props.task.description}</label>
       </li>
     );
-  },
-});
+  }
+}
+
+DraggedItem.PropTypes = {
+  task: ReactPropTypes.object.isRequired
+};

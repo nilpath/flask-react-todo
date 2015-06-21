@@ -1,6 +1,11 @@
 import React from 'react';
+import BaseComponent from './BaseComponent.js';
 
-export default React.createClass({
+export default class Header extends BaseComponent {
+  
+  constructor(props) {
+    super(props);
+  }
   
   render() {
     return (
@@ -10,4 +15,4 @@ export default React.createClass({
     );
   }
   
-});
+}

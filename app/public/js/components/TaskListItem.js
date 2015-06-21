@@ -1,18 +1,16 @@
 import React from 'react';
+import BaseComponent from './BaseComponent.js';
 import classNames from 'classnames';
 import TaskActions from '../actions/TaskActions.js';
 
 const ReactPropTypes = React.PropTypes;
 
-export default React.createClass({
+export default class TaskListItem extends BaseComponent {
   
-  propTypes: {
-    task: ReactPropTypes.object.isRequired,
-    order: ReactPropTypes.number.isRequired,
-    onDragStart: ReactPropTypes.func.isRequired,
-    onDragOver: ReactPropTypes.func.isRequired,
-    onDragEnd: ReactPropTypes.func.isRequired
-  },
+  constructor(props) {
+    super(props);
+    this._bind(['_toggleDone']);
+  }
   
   render() {
     let task = this.props.task;
@@ -41,10 +39,18 @@ export default React.createClass({
       </li>
     );
     
-  },
+  }
   
   _toggleDone() {
     TaskActions.toggleDone(this.props.task);
   }
   
-});
+}
+
+TaskListItem.propTypes = {
+  task: ReactPropTypes.object.isRequired,
+  order: ReactPropTypes.number.isRequired,
+  onDragStart: ReactPropTypes.func.isRequired,
+  onDragOver: ReactPropTypes.func.isRequired,
+  onDragEnd: ReactPropTypes.func.isRequired
+};

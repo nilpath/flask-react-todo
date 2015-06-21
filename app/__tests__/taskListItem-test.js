@@ -1,3 +1,4 @@
+jest.dontMock('../public/js/components/BaseComponent.js');
 jest.dontMock('../public/js/components/TaskListItem.js');
 jest.dontMock('../public/js/actions/TaskActions.js');
 jest.dontMock('classnames');

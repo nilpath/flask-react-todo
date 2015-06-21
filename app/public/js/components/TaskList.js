@@ -1,22 +1,33 @@
 import React from 'react';
+import BaseComponent from './BaseComponent.js';
 import TaskListItem from './TaskListItem.js';
 import DraggedItem from './DraggedItem.js';
 import TaskActions from '../actions/TaskActions.js';
 
 const ReactPropTypes = React.PropTypes;
 
-export default React.createClass({
+export default class TaskList extends BaseComponent {
   
-  propTypes: {
-    tasks: ReactPropTypes.array.isRequired
-  },
-  
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props);
+    this._bind([
+      '_renderTaskListItems',
+      '_setDraggingIndex',
+      '_setDragging',
+      '_setDraggingOrigin',
+      '_setDraggingInfo',
+      '_updateTaskOrders',
+      '_calculateToIndex',
+      '_onDragStart',
+      '_onDragOver',
+      '_onDragEnd'
+    ]);
+    
+    this.state = {
       draggingInfo: {},
       draggingOrigin: {}
     };
-  },
+  }
   
   render() {
     let tasks = this.props.tasks;
@@ -27,7 +38,7 @@ export default React.createClass({
     return (
       list
     );
-  },
+  }
   
   _renderTaskListItems(tasks) {
     let dragStart = this._onDragStart;
@@ -58,17 +69,17 @@ export default React.createClass({
     }
     
     return items;
-  },
+  }
   
   _setDraggingIndex(index) {
     this.setState({draggingIndex: index});
-  },
+  }
   
   _setDragging(task) {
     this.setState({
       dragging: task
     });
-  },
+  }
   
   _setDraggingOrigin(originX, originY, elementX, elementY) {
     this.setState({
@@ -79,7 +90,7 @@ export default React.createClass({
         elementY: elementY
       }
     });
-  },
+  }
   
   _setDraggingInfo(pageY) {
     let deltaY = pageY - this.state.draggingOrigin.originY;
@@ -90,14 +101,14 @@ export default React.createClass({
         top: this.state.draggingOrigin.elementY + deltaY + document.body.scrollTop
       }
     });
-  },
+  }
   
   _updateTaskOrders() {
     let tasks = this.props.tasks;
     tasks.forEach(function(task, key) {
       task.order = key;
     });
-  },
+  }
   
   _calculateToIndex(from, event) {
     let current = event.currentTarget;
@@ -107,7 +118,7 @@ export default React.createClass({
     if(from < to) to--;
     
     return to;
-  },
+  }
   
   _onDragStart(event) {
     let index = Number(event.currentTarget.dataset.id);
@@ -120,7 +131,7 @@ export default React.createClass({
     event.dataTransfer.effectAllowed = 'move';
     event.dataTransfer.setData('text/html', null);
     
-  },
+  }
   
   _onDragOver(event) {
     event.preventDefault();
@@ -135,7 +146,7 @@ export default React.createClass({
       this._setDraggingIndex(to);
     }
     
-  },
+  }
   
   _onDragEnd() {
     this._updateTaskOrders();
@@ -146,6 +157,10 @@ export default React.createClass({
       draggingInfo: {}
     });
     TaskActions.saveTasks(this.props.tasks);
-  },
+  }
   
-});
+}
+
+TaskList.propTypes = {
+  tasks: ReactPropTypes.array.isRequired
+};

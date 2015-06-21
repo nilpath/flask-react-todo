@@ -1,4 +1,5 @@
 import React from 'react';
+import BaseComponent from './BaseComponent.js';
 import NewTask from './NewTask.js';
 import TaskList from './TaskList.js';
 import Footer from './Footer.js';
@@ -14,25 +15,24 @@ function getState() {
   };
 }
 
-export default React.createClass({
+export default class TodoApp extends BaseComponent {
   
-  propTypes: {
-    tasks: ReactPropTypes.array
-  },
-  
-  getInitialState() {
+  constructor(props) {
+    super(props);
+    this._bind(['_onChange']);
+    
     let tasks = this.props.tasks || [];
     TaskStore.setTasks(tasks);
-    return getState();
-  },
+    this.state = getState();
+  }
   
   componentDidMount() {
     TaskStore.addChangeListener(this._onChange);
-  },
+  }
 
   componentWillUnmount() {
     TaskStore.removeChangeListener(this._onChange);
-  },
+  }
   
   render() {
     return (
@@ -47,10 +47,14 @@ export default React.createClass({
       </div>
     );
     
-  },
+  }
   
   _onChange() {
     this.setState(getState());
   }
   
-});
+}
+
+TodoApp.propTypes = {
+  tasks: ReactPropTypes.array
+};
