@@ -1,6 +1,7 @@
 import AppDispatcher from '../dispatcher/AppDispatcher.js';
 import {EventEmitter} from 'events';
 import TaskConstants from '../contants/TaskConstants.js';
+import TaskActions from '../actions/TaskActions.js';
 import TaskAPI from '../utils/TaskAPI.js';
 import assign from 'object-assign';
 
